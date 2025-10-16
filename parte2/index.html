@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Obrigado! 🤍</title>
+  <link href="https://fonts.googleapis.com/css2?family=La+Belle+Aurore&display=swap" rel="stylesheet">
+  <style>
+    :root { --card-max: 500px; }
+
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      /* mesmo fundo da parte 1 */
+      background: 
+        linear-gradient(rgba(255, 220, 230, 0.4), rgba(255, 220, 230, 0.4)),
+        url("https://images.unsplash.com/photo-1503455637927-730bce8583c0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100dvh;
+      padding: 24px 16px;
+      text-align: center;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: rgba(255,255,255,0.15);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(6px);
+      padding: 24px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      width: min(92vw, var(--card-max));
+      animation: fadeIn 0.7s ease-in-out, float 6s ease-in-out infinite;
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+  .foto-container {
+  position: relative;
+  width: 80%;
+  max-width: 340px; /* controla o tamanho máximo */
+  aspect-ratio: 16 / 9;
+  margin: 16px auto;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#foto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: transform 0.25s ease;
+}
+
+#foto:hover {
+  transform: scale(1.03);
+}
+
+
+    .carta {
+      font-family: 'La Belle Aurore', cursive;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 1.7;
+      color: #333;
+      text-align: justify;
+      text-shadow: 0.5px 0.5px rgba(255,200,200,0.3);
+      white-space: pre-wrap;
+      min-height: 150px;
+    }
+
+    .heart, .sparkle {
+      position: fixed;
+      top: -20px;
+      font-size: 20px;
+      animation: fall linear forwards;
+      z-index: 0;
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      to { transform: translateY(110vh); opacity: 0; }
+    }
+
+    .player {
+      position: fixed;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(6px);
+      border-radius: 20px;
+      padding: 12px 14px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #333;
+      width: min(92vw, 360px);
+      z-index: 2;
+    }
+
+    .player img {
+      width: 56px;
+      height: 56px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      object-fit: cover;
+    }
+
+    .player-info { flex: 1; text-align: left; overflow: hidden; }
+    .player-info h4 { margin: 0; font-size: 14px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .player-info p { margin: 2px 0 0; font-size: 12px; color: #777; }
+
+    .controls { display: flex; gap: 8px; align-items: center; }
+    .controls button {
+      background: #fe3a65;
+      border: none;
+      color: white;
+      font-size: 16px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s;
+    }
+    .controls button:hover { background: #ff6f91; }
+  </style>
+</head>
+<body>
+
+<div class="container" id="conteudo">
+  <h2>SÓ VIM TE AGRADECER ❤️</h2>
+  <div class="foto-container">
+  <img id="foto" src="https://i.ibb.co/CKsWDp5P/foto2.gif" alt="Nossa foto"/>
+</div>
+  <p class="carta" id="carta"></p>
+</div>
+
+<div class="player" id="player">
+  <img id="cover" src="" alt="Capa" />
+  <div class="player-info">
+    <h4 id="title"></h4>
+    <p id="artist"></p>
+  </div>
+  <div class="controls">
+    <button onclick="prevSong()">⏮</button>
+    <button onclick="togglePlay()" id="playBtn">▶︎</button>
+    <button onclick="nextSong()">⏭</button>
+  </div>
+</div>
+
+<audio id="audio"></audio>
+
+<script>
+const songs = [
+  { title: "Cor de Marte", artist: "Anavitória", file: "msc/cordemarte.mp3", cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTM4wyVURKokK3JHC83nxLh5KfI3d8PBq2Vzw&s" },
+  { title: "Pupila", artist: "Anavitória", file: "msc/pupila.mp3", cover: "https://upload.wikimedia.org/wikipedia/pt/9/9a/Anavit%C3%B3ria_e_Vitor_Kley_-_Pupila.jpg" },
+  { title: "Pelo Tempo que Durar", artist: "MarisaMonte", file: "msc/pelotempoquedurar.mp3", cover: "https://i.scdn.co/image/ab67616d00001e0249c49c330ae3d9e86f238174" }
+];
+
+let currentIndex = 0;
+const audio = document.getElementById("audio");
+const playBtn = document.getElementById("playBtn");
+
+const cartaTexto = `Oi meu bem, sei que não sou bom escrevendo e acho que você também sabe disso, mas vim aqui com todo o meu coração dizer que Eu te amo. Desde quando a gente começou a se conhecer melhor, tudo na minha vida também melhorou! [...] Obrigado por Tudo. 💕`;
+
+function iniciarCoracoes() {
+  setInterval(() => {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.textContent = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+    heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+  }, 700);
+}
+
+function iniciarBrilhos() {
+  setInterval(() => {
+    const sparkle = document.createElement("div");
+    sparkle.classList.add("sparkle");
+    sparkle.textContent = "✨";
+    sparkle.style.left = Math.random() * 100 + "vw";
+    sparkle.style.fontSize = (Math.random() * 10 + 10) + "px";
+    sparkle.style.animationDuration = (Math.random() * 3 + 3) + "s";
+    document.body.appendChild(sparkle);
+    setTimeout(() => sparkle.remove(), 6000);
+  }, 1000);
+}
+
+function efeitoDigitar(text, element) {
+  element.textContent = '';
+  let i = 0;
+  const interval = setInterval(() => {
+    element.textContent += text.charAt(i);
+    i++;
+    if (i >= text.length) clearInterval(interval);
+  }, 20);
+}
+
+function loadSong(index) {
+  const song = songs[index];
+  document.getElementById("title").textContent = song.title;
+  document.getElementById("artist").textContent = song.artist;
+  document.getElementById("cover").src = song.cover;
+  audio.src = song.file;
+}
+
+function togglePlay() {
+  if (audio.paused) {
+    audio.play();
+    playBtn.textContent = "⏸";
+  } else {
+    audio.pause();
+    playBtn.textContent = "▶︎";
+  }
+}
+
+function nextSong() {
+  currentIndex = (currentIndex + 1) % songs.length;
+  loadSong(currentIndex);
+  audio.play();
+  playBtn.textContent = "⏸";
+}
+
+function prevSong() {
+  currentIndex = (currentIndex - 1 + songs.length) % songs.length;
+  loadSong(currentIndex);
+  audio.play();
+  playBtn.textContent = "⏸";
+}
+
+const fotos = [
+  "https://i.ibb.co/5WkZnxpp/image.png",
+  "https://i.postimg.cc/j5y4Xrht/IMG-20250815-222941-122.jpg",
+  "https://i.postimg.cc/MKmrw1Vq/IMG-20250820-195341-171.jpg"
+];
+
+let fotoAtual = 0;
+
+function trocarFoto() {
+  const img = document.getElementById("foto");
+  fotoAtual = (fotoAtual + 1) % fotos.length;
+  img.src = fotos[fotoAtual];
+}
+
+window.addEventListener("load", () => {
+  iniciarCoracoes();
+  iniciarBrilhos();
+  loadSong(currentIndex);
+  efeitoDigitar(cartaTexto, document.getElementById("carta"));
+  audio.play();
+  playBtn.textContent = "⏸";
+});
+</script>
+</body>
+</html>
