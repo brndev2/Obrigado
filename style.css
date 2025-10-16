@@ -188,3 +188,25 @@ h1 {
   font-size: 12px;
   color: white;
 }
+
+html {
+  background-color: #f0f0f0;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  html, body {
+    background: #f0f0f0 !important;
+    color: #000 !important;
+  }
+
+  .card {
+    background: #ffffff !important;
+    color: #000 !important;
+  }
+
+  button {
+    color: #fff !important;
+  }
+}
+

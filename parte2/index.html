@@ -11,7 +11,6 @@
     body {
       margin: 0;
       font-family: "Poppins", sans-serif;
-      /* mesmo fundo da parte 1 */
       background: 
         linear-gradient(rgba(255, 220, 230, 0.4), rgba(255, 220, 230, 0.4)),
         url("https://images.unsplash.com/photo-1503455637927-730bce8583c0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
@@ -59,33 +58,30 @@
       50% { transform: translateY(-5px); }
     }
 
-  .foto-container {
-  position: relative;
-  width: 80%;
-  max-width: 340px; /* controla o tamanho máximo */
-  aspect-ratio: 16 / 9;
-  margin: 16px auto;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+    .foto-container {
+      position: relative;
+      width: 80%;
+      max-width: 340px;
+      aspect-ratio: 16 / 9;
+      margin: 16px auto;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-#foto {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 16px;
-  cursor: pointer;
-  transition: transform 0.25s ease;
-}
+    #foto {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: transform 0.25s ease;
+    }
 
-#foto:hover {
-  transform: scale(1.03);
-}
-
+    #foto:hover { transform: scale(1.03); }
 
     .carta {
       font-family: 'La Belle Aurore', cursive;
@@ -159,6 +155,14 @@
       transition: 0.3s;
     }
     .controls button:hover { background: #ff6f91; }
+
+    /* Animação das frases do urso */
+    @keyframes fadeMsg {
+      0% { opacity: 0; transform: translateY(10px); }
+      20% { opacity: 1; transform: translateY(0); }
+      80% { opacity: 1; }
+      100% { opacity: 0; transform: translateY(-10px); }
+    }
   </style>
 </head>
 <body>
@@ -166,11 +170,12 @@
 <div class="container" id="conteudo">
   <h2>SÓ VIM TE AGRADECER ❤️</h2>
   <div class="foto-container">
-  <img id="foto" src="https://i.ibb.co/CKsWDp5P/foto2.gif" alt="Nossa foto"/>
-</div>
+    <img id="foto" src="https://i.ibb.co/CKsWDp5P/foto2.gif" alt="Nossa foto"/>
+  </div>
   <p class="carta" id="carta"></p>
 </div>
 
+<!-- Player de música -->
 <div class="player" id="player">
   <img id="cover" src="" alt="Capa" />
   <div class="player-info">
@@ -182,6 +187,11 @@
     <button onclick="togglePlay()" id="playBtn">▶︎</button>
     <button onclick="nextSong()">⏭</button>
   </div>
+</div>
+
+<!-- Hello Kitty (easter egg) -->
+<div id="urso" style="position:fixed; bottom:90px; right:15px; cursor:pointer; z-index:3;">
+  <img src="img/HelloKitty.gif" alt="Hello Kitty" style="width:55px; height:auto;">
 </div>
 
 <audio id="audio"></audio>
@@ -197,7 +207,7 @@ let currentIndex = 0;
 const audio = document.getElementById("audio");
 const playBtn = document.getElementById("playBtn");
 
-const cartaTexto = `Oi meu bem, sei que não sou bom escrevendo e acho que você também sabe disso, mas vim aqui com todo o meu coração dizer que Eu te amo. Desde quando a gente começou a se conhecer melhor, tudo na minha vida também melhorou! [...] Obrigado por Tudo. 💕`;
+const cartaTexto = `Oii, de novo eu estou aqui fazendo outro site para você kkkkkkk. Dessa vez não é uma carta sendo grudento nem nada, é só uma forma de agradecer mesmo. Agradecer por tudo que você já fez e faz por mim. Pela paciência, pelo carinho e por sempre estar comigo, mesmo nos dias em que eu sou chato. Com você, um momento simples se torna especial. Quando estou com você, percebo o quanto eu sou sortudo e grato a Deus por ter você ao meu lado. Como diz Santo Agostinho: "O amor verdadeiro espera, suporta e supera". Obrigado por ser você! 🤍`;
 
 function iniciarCoracoes() {
   setInterval(() => {
@@ -289,6 +299,49 @@ window.addEventListener("load", () => {
   audio.play();
   playBtn.textContent = "⏸";
 });
+
+/* 🧸 Easter Egg do Ursinho */
+const frases = [
+  "Eu te almo 💝",
+  "Você é meu lugar favorito 💗",
+  "Tudo fica melhor com você 🌷",
+  "Deus caprichou em você ✨",
+  "Amar é simples, quando é você 💕",
+  "Meu coração sorri quando te vê 🥰",
+  "Com você, até o silêncio é bonito 💫",
+  "Te ver sorrir é o meu ponto de paz 💖",
+  "Meu dia preferido é qualquer um que tem você ☀️",
+  "Não preciso de sorte, tenho você 🍀",
+  "Você é o meu lar, mesmo longe de casa 🏡",
+  "Cada momento com você vira uma lembrança bonita 📸",
+  "De todas as histórias, a nossa é a minha favorita 📖",
+  "Nada brilha mais que o seu olhar ✨"
+];
+
+let indiceFrase = 0;
+
+document.getElementById("urso").addEventListener("click", () => {
+  const frase = frases[indiceFrase];
+  indiceFrase = (indiceFrase + 1) % frases.length; // avança em ordem e reinicia no fim
+
+  const msg = document.createElement("div");
+  msg.textContent = frase;
+  msg.style.position = "fixed";
+  msg.style.bottom = "140px";
+  msg.style.right = "20px";
+  msg.style.background = "rgba(255,255,255,0.9)";
+  msg.style.padding = "10px 16px";
+  msg.style.borderRadius = "14px";
+  msg.style.fontFamily = "'La Belle Aurore', cursive";
+  msg.style.color = "#f5073b";
+  msg.style.fontSize = "16px";
+  msg.style.boxShadow = "0 2px 10px rgba(0,0,0,0.1)";
+  msg.style.animation = "fadeMsg 3s forwards";
+  msg.style.zIndex = "10";
+  document.body.appendChild(msg);
+  setTimeout(() => msg.remove(), 3000);
+});
+
 </script>
 </body>
 </html>
