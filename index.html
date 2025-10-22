@@ -4,54 +4,116 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="color-scheme" content="light">
-<style>
-  :root {
-    color-scheme: light !important;
-  }
-</style>
   <title>Cartão Para meu bem❤️</title>
   <link rel="stylesheet" href="./style.css">
+  <style>
+    :root {
+      color-scheme: light !important;
+    }
+
+    /* Tela de bloqueio */
+    #bloqueio {
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      color: #444;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+      z-index: 99999;
+    }
+
+    #bloqueio p {
+      font-size: 1.2em;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    #bloqueio input {
+      padding: 8px 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      text-align: center;
+    }
+
+    #bloqueio button {
+      margin-top: 10px;
+      padding: 8px 14px;
+      border: none;
+      background: #ff758c;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #bloqueio button:hover {
+      background: #ff5170;
+    }
+  </style>
 </head>
 <body>
-<!-- partial:index.partial.html -->
-<div id="canvas-container"></div>
-<div class="wrapper">
-  <div class="card">
-    <p class="text-intro"></p>
-    <div class="card-content">
-      <!-- <div class="heart"></div> -->
-      <div class="valentine-text" style="display: none">
-        <h1>Oi, você ainda gosta de mim?</h1>
-        <img src="./img/foto1.gif" alt="please" class="please" />
-      </div>
-      <div class="buttons" style="display: none">
-        <button class="yes">Sim</button>
-        <button class="no">Não</button>
-      </div>
-      <div class="valentine-congrats" style="display: none">
-        <h1>Oba!</h1>
-        <p>Eu também te amo 💖</p>
-        <p class="cute-text">Você é a melhor parte dos meus dias, e eu fico muito feliz por ter você aqui comigo 🥰</p>
-      </div>
-    </div>
-    <div class="cord-wrapper">
-      <svg width="40" height="200" class="cord">
-        <path class="cord-path" d="M20,0 C20,50 20,150 20,200" />
-      </svg>
-      <svg class="plug" y="140" viewBox="0 0 100 160">
-        <path d="M30,0 L70,0 L90,40 L90,140 L10,140 L10,40 Z" />
-        <circle cx="35" cy="20" r="5" fill="white" />
-        <circle cx="65" cy="20" r="5" fill="white" />
-      </svg>
-      <div class="ribbon"></div>
-    </div>
+  <!-- Tela de bloqueio -->
+  <div id="bloqueio">
+    <p>Site temporariamente em manutenção 💭</p>
+    <input type="password" id="acesso" placeholder="Senha de acesso">
+    <button onclick="verificarSenha()">Entrar</button>
   </div>
-</div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-<!-- partial -->
-<script src="./script.js"></script>
+  <!-- Conteúdo real (oculto por padrão) -->
+  <div id="conteudo" style="display:none;">
+    <div id="canvas-container"></div>
+    <div class="wrapper">
+      <div class="card">
+        <p class="text-intro"></p>
+        <div class="card-content">
+          <div class="valentine-text" style="display: none">
+            <h1>Oi, você ainda gosta de mim?</h1>
+            <img src="./img/foto1.gif" alt="please" class="please" />
+          </div>
+          <div class="buttons" style="display: none">
+            <button class="yes">Sim</button>
+            <button class="no">Não</button>
+          </div>
+          <div class="valentine-congrats" style="display: none">
+            <h1>Oba!</h1>
+            <p>Eu também te amo 💖</p>
+            <p class="cute-text">Você é a melhor parte dos meus dias, e eu fico muito feliz por ter você aqui comigo 🥰</p>
+          </div>
+        </div>
+        <div class="cord-wrapper">
+          <svg width="40" height="200" class="cord">
+            <path class="cord-path" d="M20,0 C20,50 20,150 20,200" />
+          </svg>
+          <svg class="plug" y="140" viewBox="0 0 100 160">
+            <path d="M30,0 L70,0 L90,40 L90,140 L10,140 L10,40 Z" />
+            <circle cx="35" cy="20" r="5" fill="white" />
+            <circle cx="65" cy="20" r="5" fill="white" />
+          </svg>
+          <div class="ribbon"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="./script.js"></script>
+  </div>
+
+  <script>
+    // --- senha temporária ---
+    const senhaCorreta = "brn311314"; // altere aqui
+    function verificarSenha() {
+      const entrada = document.getElementById("acesso").value.trim();
+      if (entrada === senhaCorreta) {
+        document.getElementById("bloqueio").style.display = "none";
+        document.getElementById("conteudo").style.display = "block";
+      } else {
+        alert("Senha invalida");
+      }
+    }
+  </script>
 </body>
 </html>
